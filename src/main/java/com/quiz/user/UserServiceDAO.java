@@ -54,7 +54,7 @@ public class UserServiceDAO {
             while (result.next()) {
                 UserBean user = new UserBean();
                 List<Links> links = new ArrayList<>();
-
+                System.out.print(user.toString() + " ");
                 user.setUserId(result.getInt("userId"));
                 user.setUserName(result.getString("userName"));
                 user.setFirstName(result.getString("firstName"));
@@ -74,7 +74,8 @@ public class UserServiceDAO {
             }
         } catch (Exception exe) {
             LOG.error(exe.getCause() + " = " + exe.getMessage() + " == " + exe.getLocalizedMessage() + " == " + exe.getStackTrace());
-            throw new CustomException(exe.getMessage(), 500, "We found some Exception, will get back soon", null);
+            exe.printStackTrace();
+            // throw new CustomException("Exception Occurred", 500, "We found some Exception, will get back soon", null);
 
         }
         LOG.info("Number of User retrieved from the database is " + userList.size());
