@@ -29,6 +29,7 @@ public class UserController {
 
     private Response userCrud;
 
+    @Context
     UriInfo uriInfo;
 
     public UserController() {
@@ -37,6 +38,7 @@ public class UserController {
 
     @GET
     public void getAllUsers(@Suspended AsyncResponse asyncResponse) {
+        System.out.println(uriInfo.getAbsolutePath());
         CompletableFuture.supplyAsync(() -> {
             try {
                 userCrud = userServiceImpl.getAllUsers(uriInfo);

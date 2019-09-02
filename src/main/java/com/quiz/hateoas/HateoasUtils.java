@@ -13,7 +13,7 @@ public class HateoasUtils {
     public static Links getDetailsById(UriInfo uriInfo, int userId, String relMessage) {
         LOG.info(uriInfo.getAbsolutePath() + " "+ uriInfo.getBaseUri() + " " + uriInfo.getPath());
         links = new Links();
-        links.setLink(uriInfo.getAbsolutePath().toString()+"/" +userId);
+        links.setLink(uriInfo.getAbsolutePath().toString() +userId);
         links.setRef(relMessage);
         return links;
     }
