@@ -50,7 +50,7 @@ public class UserServiceDAO {
             PreparedStatement pst = dbConnection.prepareStatement(statement);
             ResultSet result = pst.executeQuery();
 
-            LOG.info("Executing query on database for user : " + id);
+            LOG.info("Executing query on database for user : " + id + " Result is  :: " + result.next());
             while (result.next()) {
                 UserBean user = new UserBean();
                 List<Links> links = new ArrayList<>();
@@ -90,6 +90,4 @@ public class UserServiceDAO {
                     .build();
         }
     }
-
-
 }
