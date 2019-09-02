@@ -29,7 +29,6 @@ public class UserController {
 
     private Response userCrud;
 
-    @Context
     UriInfo uriInfo;
 
     public UserController() {
