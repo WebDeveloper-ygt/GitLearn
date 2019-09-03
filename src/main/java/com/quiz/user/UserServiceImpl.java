@@ -31,7 +31,7 @@ public class UserServiceImpl {
     public Response getAllUsers(String uriInfo) {
         Response allUsers = null;
         try {
-            allUsers = UserServiceDAO.getAllUsers(uriInfo);
+            allUsers = userDao.getAllUsers(uriInfo);
         } catch (ExceptionOccurred | CustomException exceptionOccurred) {
             exceptionOccurred.printStackTrace();
         }

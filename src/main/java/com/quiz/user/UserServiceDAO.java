@@ -32,12 +32,12 @@ public class UserServiceDAO {
         LOG.info("Invoked :: " + this.getClass().getName());
     }
 
-    public static Response getAllUsers(String uriInfo) throws ExceptionOccurred, CustomException {
+    public  Response getAllUsers(String uriInfo) throws ExceptionOccurred, CustomException {
 
         return getUserDetailsInCommon(uriInfo, Constants.USERS, 0);
     }
 
-    private static Response getUserDetailsInCommon(String uriInfo, String statement, int id) throws CustomException {
+    private  Response getUserDetailsInCommon(String uriInfo, String statement, int id) throws CustomException {
         userList = new ArrayList<>();
 
         try {
@@ -72,6 +72,9 @@ public class UserServiceDAO {
                 user.setLinks(links);
                 userList.add(user);
             }
+            
+                
+
         } catch (Exception exe) {
             LOG.error(exe.getCause() + " = " + exe.getMessage() + " == " + exe.getLocalizedMessage() + " == " + exe.getStackTrace());
             exe.printStackTrace();
