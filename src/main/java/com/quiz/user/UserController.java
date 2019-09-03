@@ -31,16 +31,18 @@ public class UserController {
 
     @Context
     UriInfo uriInfo;
-
+    String info;
+    
     public UserController() {
         LOG.info("Invoked :: " + this.getClass().getName());
+        info=uriInfo.getAbsolutePath().toString();
+        System.out.println(info);
     }
 
     @GET
     public void getAllUsers(@Suspended AsyncResponse asyncResponse) {
+        System.out.println(info);
         CompletableFuture.supplyAsync(() -> {
-            String info =uriInfo.getAbsolutePath().toString();
-            System.out.println(info);
             try {
                 userCrud = userServiceImpl.getAllUsers(info);
             } catch (Exception exe) {
