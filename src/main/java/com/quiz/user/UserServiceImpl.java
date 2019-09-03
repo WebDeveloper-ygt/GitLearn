@@ -1,16 +1,13 @@
 package com.quiz.user;
 
-import com.quiz.exception.CustomException;
-import com.quiz.exception.ExceptionOccurred;
-import com.quiz.hateoas.HateoasUtils;
-import com.quiz.user.model.UserBean;
-import org.apache.log4j.Logger;
-
-import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import java.util.ArrayList;
-import java.util.List;
+
+import com.quiz.exception.CustomException;
+import com.quiz.exception.ExceptionOccurred;
+import com.quiz.user.model.UserBean;
+
+import org.apache.log4j.Logger;
 
 public class UserServiceImpl implements UserServiceInterface{
 

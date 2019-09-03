@@ -1,5 +1,15 @@
 package com.quiz.user;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ws.rs.core.GenericEntity;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+
 import com.quiz.exception.CustomException;
 import com.quiz.exception.ExceptionOccurred;
 import com.quiz.hateoas.HateoasUtils;
@@ -7,17 +17,8 @@ import com.quiz.user.model.UserBean;
 import com.quiz.utils.ApiUtils;
 import com.quiz.utils.Constants;
 import com.quiz.utils.Links;
-import org.apache.log4j.Logger;
 
-import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import org.apache.log4j.Logger;
 
 public class UserServiceDAO {
 

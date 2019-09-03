@@ -1,9 +1,7 @@
 package com.quiz.user;
 
-import com.quiz.exception.CustomException;
-import com.quiz.exception.ExceptionOccurred;
-import com.quiz.utils.ThreadExecutor;
-import org.apache.log4j.Logger;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -15,8 +13,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
+
+import com.quiz.utils.ThreadExecutor;
+
+import org.apache.log4j.Logger;
 
 @Path("/users")
 @Produces({MediaType.APPLICATION_JSON})

@@ -5,6 +5,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import com.quiz.exam.model.ExamBean;
 import com.quiz.utils.Links;
 
+import org.glassfish.jersey.server.Uri;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,5 +114,9 @@ public class UserBean {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public static void print(String Uri) {
+        System.out.println(Uri);
     }
 }

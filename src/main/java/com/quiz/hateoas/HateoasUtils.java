@@ -1,11 +1,10 @@
 package com.quiz.hateoas;
 
-import com.quiz.user.UserController;
-import com.quiz.user.UserServiceDAO;
-import com.quiz.utils.Links;
-import org.apache.log4j.Logger;
-
 import javax.ws.rs.core.UriInfo;
+
+import com.quiz.utils.Links;
+
+import org.apache.log4j.Logger;
 
 public class HateoasUtils {
     private static final Logger LOG = Logger.getLogger(HateoasUtils.class);
