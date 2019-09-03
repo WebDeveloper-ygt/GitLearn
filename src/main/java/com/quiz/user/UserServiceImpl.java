@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserServiceInterface{
         LOG.info("Invoked :: " +this.getClass().getName());
     }
 
+    @Override
     public Response getAllUsers(String uriInfo) {
         Response allUsers = null;
         try {
@@ -77,9 +78,4 @@ public class UserServiceImpl implements UserServiceInterface{
 	public String getdetails(String string) {
 		return string;
 	}
-
-    @Override
-    public Response getAllUsers(UriInfo uriInfo) throws ExceptionOccurred {
-        return null;
-    }
 }
