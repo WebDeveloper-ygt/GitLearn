@@ -39,12 +39,7 @@ public class UserController {
         String uriPath = uriInfo.getAbsolutePath().toString();
         LOG.info("Called URI ==> " + uriPath);
         CompletableFuture.supplyAsync(() -> {
-            try {
-                userCrud = userServiceImpl.getAllUsers(uriPath);
-            } catch (Exception exe) {
-                exe.printStackTrace();
-            }
-            return userCrud;
+            return userServiceImpl.getAllUsers(uriPath);
         }, executorService).thenAccept(response -> asyncResponse.resume(userCrud));
     }
 }

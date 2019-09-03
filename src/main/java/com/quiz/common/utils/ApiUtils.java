@@ -18,7 +18,6 @@ public class ApiUtils {
     private static final String USER = "admin";
     private static final String PASSWORD = "admin";
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static Connection connection;
 
     private ApiUtils() {
         LOG.info("Invoked " +this.getClass().getName());
@@ -28,13 +27,11 @@ public class ApiUtils {
 
         try {
             Class.forName(DRIVER);
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
             LOG.info("Connection happened");
+            return  connection;
         } catch (Exception exe) {
-            exe.printStackTrace();
-            //LOG.error(exe.getMessage());
-           throw new CustomException("Exception while connecting to Database");
+           return null;
         }
-        return connection;
     }
 }

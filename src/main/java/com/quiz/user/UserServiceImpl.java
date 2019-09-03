@@ -20,12 +20,7 @@ public class UserServiceImpl implements UserServiceInterface{
 
     @Override
     public Response getAllUsers(String uriInfo) {
-        try {
-            userCrud = userDao.getAllUsers(uriInfo);
-        } catch (CustomException exceptionOccurred) {
-            //throw new CustomException();
-            exceptionOccurred.printStackTrace();
-        }
+        userCrud = userDao.getAllUsers(uriInfo);
         return userCrud;
     }
 

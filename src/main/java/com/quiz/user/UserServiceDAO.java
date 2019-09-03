@@ -32,13 +32,12 @@ public class UserServiceDAO {
 
     public static Response getAllUsers(String uriInfo) throws CustomException {
 
-        return getUserDetailsInCommon(uriInfo, Constants.USERS, 0);
+         return getUserDetailsInCommon(uriInfo, Constants.USERS, 0);
     }
 
     private static Response getUserDetailsInCommon(String uriInfo, String statement, int id) throws CustomException {
         userList = new ArrayList<>();
         dbConnection = ApiUtils.getDbConnection();
-
         try {
             PreparedStatement pst = dbConnection.prepareStatement(statement);
             ResultSet result = pst.executeQuery();
@@ -65,9 +64,7 @@ public class UserServiceDAO {
                 userList.add(user);
             }
         } catch (Exception exe) {
-            LOG.error("Exception @" + exe.getClass() + " ==> " +exe.getStackTrace() + " : "  + exe.getMessage());
-            throw new CustomException("Exception in fetching user from storage");
-
+            return null;
         }
         LOG.info("Number of User retrieved from the database is ==> " + userList.size());
         if (userList.size() > 0) {

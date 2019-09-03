@@ -1,9 +1,12 @@
 package com.quiz;
 
+import com.quiz.common.exception.CustomException;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * Root resource (exposed at "myresource" path)
@@ -18,8 +21,21 @@ public class MyResource {
      * @return String that will be returned as a text/plain response.
      */
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Got it!";
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getIt() {
+
+        /*int sum = 10 +20 ;
+        if(sum < 0){
+            return Response.status(Response.Status.OK).entity("successful").build();
+        }else{
+            throw  new CustomException("sum is greater than zero");
+        }*/
+
+        try{
+            int divide = 10/0;
+            return Response.status(Response.Status.OK).entity("successful").build();
+        }catch (Exception exception){
+            throw  new CustomException("divide by zero");
+        }
     }
 }

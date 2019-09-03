@@ -1,6 +1,7 @@
 package com.quiz.common.hateoas;
 
 import com.quiz.common.exception.CustomException;
+import com.quiz.common.utils.ExceptionBean;
 import com.quiz.common.utils.Links;
 import com.quiz.user.UserServiceDAO;
 import org.apache.log4j.Logger;
@@ -37,11 +38,11 @@ public class HateoasUtils {
         exceptionLink.add(getSelfDetails(uriInfo));
         if(className.equalsIgnoreCase(UserServiceDAO.class.getName())){
             return Response.status(Response.Status.NOT_FOUND).entity(
-                    new CustomException("User Not Found", 404, "User with identification id" + resourceId + " not found", exceptionLink))
+                    new ExceptionBean("User Not Found", 404, "User with identification id" + resourceId + " not found", exceptionLink))
                     .build();
         }else{
             return Response.status(Response.Status.NOT_FOUND).entity(
-                    new CustomException("Resource Not Found", 404, "Resource with identification id" + resourceId + " not found", exceptionLink))
+                    new ExceptionBean("Resource Not Found", 404, "Resource with identification id" + resourceId + " not found", exceptionLink))
                     .build();
         }
     }
