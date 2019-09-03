@@ -3,7 +3,7 @@ package com.quiz.user.model;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.quiz.exam.model.ExamBean;
-import com.quiz.utils.Links;
+import com.quiz.common.utils.Links;
 
 import java.util.ArrayList;
 import java.util.List;

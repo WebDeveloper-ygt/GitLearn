@@ -2,7 +2,7 @@ package com.quiz.exam.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.quiz.utils.Links;
+import com.quiz.common.utils.Links;
 
 import java.util.ArrayList;
 import java.util.List;

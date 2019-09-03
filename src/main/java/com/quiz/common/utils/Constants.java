@@ -1,4 +1,4 @@
-package com.quiz.utils;
+package com.quiz.common.utils;
 
 public class Constants {
         public static final String USERS="select * from quiz_users";
@@ -13,4 +13,5 @@ public class Constants {
         public static final String QUSETION_OPTIONS="SELECT * FROM question_options where questionId=";
         public static final String SECRET ="cXVpemFwaXNlY3JldGlzcWx3eXNmdW51c2luZ2plcmVzeQ==";
         public static final String LOGIN="select * from quiz_users where emailId=? and password=?";
+        public static final String ALL ="all";
 }

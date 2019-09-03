@@ -1,4 +1,4 @@
-package com.quiz.utils;
+package com.quiz.common.utils;
 
 public class Links {
 

@@ -1,4 +1,4 @@
-package com.quiz.exception;
+package com.quiz.common.exception;
 
 public class ExceptionOccurred extends Exception {
 

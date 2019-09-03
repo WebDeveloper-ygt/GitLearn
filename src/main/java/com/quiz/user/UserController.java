@@ -1,8 +1,6 @@
 package com.quiz.user;
 
-import com.quiz.exception.CustomException;
-import com.quiz.exception.ExceptionOccurred;
-import com.quiz.utils.ThreadExecutor;
+import com.quiz.common.utils.ThreadExecutor;
 import org.apache.log4j.Logger;
 
 import javax.ws.rs.Consumes;
@@ -23,9 +21,9 @@ import java.util.concurrent.ExecutorService;
 @Consumes({MediaType.APPLICATION_JSON})
 public class UserController {
 
+    private static final ExecutorService executorService = new ThreadExecutor().getExecutor();
     private static final Logger LOG = Logger.getLogger(UserController.class);
     private static final UserServiceImpl userServiceImpl = new UserServiceImpl();
-    private ExecutorService executorService = new ThreadExecutor().getExecutor(5);
 
     private Response userCrud;
 
@@ -33,15 +31,16 @@ public class UserController {
     UriInfo uriInfo;
 
     public UserController() {
-        LOG.info("Invoked :: " + this.getClass().getName());
+        LOG.info("Invoked ==> " + this.getClass().getName());
     }
 
     @GET
     public void getAllUsers(@Suspended AsyncResponse asyncResponse) {
-        System.out.println(uriInfo.getAbsolutePath());
+        String uriPath = uriInfo.getAbsolutePath().toString();
+        LOG.info("Called URI ==> " + uriPath);
         CompletableFuture.supplyAsync(() -> {
             try {
-                userCrud = userServiceImpl.getAllUsers(uriInfo);
+                userCrud = userServiceImpl.getAllUsers(uriPath);
             } catch (Exception exe) {
                 exe.printStackTrace();
             }

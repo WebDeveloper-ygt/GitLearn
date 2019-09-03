@@ -1,21 +1,18 @@
-package com.quiz.exception;
-
-import com.quiz.utils.Links;
+package com.quiz.common.utils;
 
 import java.util.List;
 
-public class CustomException extends  Exception{
+public class ExceptionBean {
+
     private String message;
     private int statusCode;
     private String description;
     private List<Links> links;
 
-    private static final long serialVersionUID = 1L;
-
-    public CustomException() {
-
+    public ExceptionBean() {
     }
-    public CustomException(String message, int statusCode, String description, List<Links>links) {
+
+    public ExceptionBean(String message, int statusCode, String description, List<Links>links) {
         this.message = message;
         this.statusCode = statusCode;
         this.description = description;
@@ -46,9 +43,6 @@ public class CustomException extends  Exception{
         this.description = description;
     }
 
-    public static long getSerialversionuid() {
-        return serialVersionUID;
-    }
     public List<Links> getLinks() {
         return links;
     }

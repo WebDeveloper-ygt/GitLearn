@@ -1,12 +1,12 @@
 package com.quiz.user;
 
-import com.quiz.exception.CustomException;
-import com.quiz.exception.ExceptionOccurred;
-import com.quiz.hateoas.HateoasUtils;
+import com.quiz.common.exception.CustomException;
+import com.quiz.common.exception.ExceptionOccurred;
+import com.quiz.common.hateoas.HateoasUtils;
 import com.quiz.user.model.UserBean;
-import com.quiz.utils.ApiUtils;
-import com.quiz.utils.Constants;
-import com.quiz.utils.Links;
+import com.quiz.common.utils.ApiUtils;
+import com.quiz.common.utils.Constants;
+import com.quiz.common.utils.Links;
 import org.apache.log4j.Logger;
 
 import javax.ws.rs.core.GenericEntity;
@@ -15,7 +15,6 @@ import javax.ws.rs.core.UriInfo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,38 +22,31 @@ public class UserServiceDAO {
 
     private static Connection dbConnection;
     private static List<UserBean> userList;
-    private static List<Links> exceptionLink;
     private static String relMessage;
 
     private static final Logger LOG = Logger.getLogger(UserServiceDAO.class);
 
     public UserServiceDAO() {
-        LOG.info("Invoked :: " + this.getClass().getName());
+        LOG.info("Invoked ==> " + this.getClass().getName());
     }
 
-    public static Response getAllUsers(UriInfo uriInfo) throws ExceptionOccurred, CustomException {
+    public static Response getAllUsers(String uriInfo) throws CustomException {
 
         return getUserDetailsInCommon(uriInfo, Constants.USERS, 0);
     }
 
-    private static Response getUserDetailsInCommon(UriInfo uriInfo, String statement, int id) throws CustomException {
+    private static Response getUserDetailsInCommon(String uriInfo, String statement, int id) throws CustomException {
         userList = new ArrayList<>();
-
-        try {
-            dbConnection = ApiUtils.getDbConnection();
-        } catch (ClassNotFoundException exe) {
-            throw new CustomException(exe.getMessage(), 500, "We found some Exception, will get back soon", null);
-        }
+        dbConnection = ApiUtils.getDbConnection();
 
         try {
             PreparedStatement pst = dbConnection.prepareStatement(statement);
             ResultSet result = pst.executeQuery();
 
-            LOG.info("Executing query on database for user : " + id + " Result is  :: " + result.next());
+            LOG.info("Executing query on database for user ==> " + ((id > 0)?id:Constants.ALL));
             while (result.next()) {
                 UserBean user = new UserBean();
                 List<Links> links = new ArrayList<>();
-                System.out.print(user.toString() + " ");
                 user.setUserId(result.getInt("userId"));
                 user.setUserName(result.getString("userName"));
                 user.setFirstName(result.getString("firstName"));
@@ -73,21 +65,15 @@ public class UserServiceDAO {
                 userList.add(user);
             }
         } catch (Exception exe) {
-            LOG.error(exe.getCause() + " = " + exe.getMessage() + " == " + exe.getLocalizedMessage() + " == " + exe.getStackTrace());
-            exe.printStackTrace();
-            // throw new CustomException("Exception Occurred", 500, "We found some Exception, will get back soon", null);
+            LOG.error("Exception @" + exe.getClass() + " ==> " +exe.getStackTrace() + " : "  + exe.getMessage());
+            throw new CustomException("Exception in fetching user from storage");
 
         }
-        LOG.info("Number of User retrieved from the database is " + userList.size());
+        LOG.info("Number of User retrieved from the database is ==> " + userList.size());
         if (userList.size() > 0) {
-            return Response.status(Response.Status.OK).entity(new GenericEntity<List<UserBean>>(userList) {
-            }).build();
+            return Response.status(Response.Status.OK).entity(new GenericEntity<List<UserBean>>(userList){}).build();
         } else {
-            exceptionLink = new ArrayList<>();
-            exceptionLink.add(HateoasUtils.getSelfDetails(uriInfo));
-            return Response.status(Response.Status.NOT_FOUND).entity(
-                    new CustomException("User Not Found", 404, "User with user id " + id + " not found", exceptionLink))
-                    .build();
+            return HateoasUtils.ResourceNotFound(UserServiceDAO.class.getName(),uriInfo,id);
         }
     }
 }
