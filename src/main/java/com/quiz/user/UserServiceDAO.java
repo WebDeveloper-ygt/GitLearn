@@ -38,7 +38,7 @@ public class UserServiceDAO {
         
     }
     public Response getUser(String uriInfo, int userId) throws CustomException {
-		return getUserDetailsInCommon(uriInfo, Constants.USERS, userId);
+		return getUserDetailsInCommon(uriInfo, Constants.USERS_ID, userId);
     }
     
     private  Response getUserDetailsInCommon(String uriInfo, String statement, int id) throws CustomException {
@@ -52,6 +52,9 @@ public class UserServiceDAO {
 
         try {
             PreparedStatement pst = dbConnection.prepareStatement(statement);
+            if(id > 0){
+                pst.setInt(1, id);
+            }
             ResultSet result = pst.executeQuery();
 
             LOG.info("Executing query on database for user : " + id + " Result is  :: " + result.next());
