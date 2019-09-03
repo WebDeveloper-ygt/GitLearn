@@ -33,10 +33,14 @@ public class UserServiceDAO {
     }
 
     public  Response getAllUsers(String uriInfo) throws ExceptionOccurred, CustomException {
-
+        
         return getUserDetailsInCommon(uriInfo, Constants.USERS, 0);
+        
     }
-
+    public Response getUser(String uriInfo, int userId) throws CustomException {
+		return getUserDetailsInCommon(uriInfo, Constants.USERS, userId);
+    }
+    
     private  Response getUserDetailsInCommon(String uriInfo, String statement, int id) throws CustomException {
         userList = new ArrayList<>();
 
@@ -93,4 +97,6 @@ public class UserServiceDAO {
                     .build();
         }
     }
+
+	
 }

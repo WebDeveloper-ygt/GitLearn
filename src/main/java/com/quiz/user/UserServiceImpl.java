@@ -38,12 +38,17 @@ public class UserServiceImpl {
         return allUsers;
     }
 
-   /*  @Override
-    public Response getUser(int userId, UriInfo uriInfo) {
-        return null;
+    public Response getUser(String uriInfo,int userId) {
+        Response allUsers = null;
+        try {
+            allUsers = userDao.getUser(uriInfo,userId);
+        } catch (ExceptionOccurred | CustomException exceptionOccurred) {
+            exceptionOccurred.printStackTrace();
+        }
+        return allUsers;
     }
 
-    @Override
+  /*  @Override
     public Response addUser(UserBean user, UriInfo uriInfo) {
         return null;
     }
@@ -78,4 +83,6 @@ public class UserServiceImpl {
 	public String getdetails(String string) {
 		return string;
 	}
+
+	
 }

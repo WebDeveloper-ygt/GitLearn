@@ -6,6 +6,7 @@ import java.util.concurrent.ExecutorService;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
@@ -44,6 +45,21 @@ public class UserController {
         CompletableFuture.supplyAsync(() -> {
             try {
                 userCrud = userServiceImpl.getAllUsers(info);
+            } catch (Exception exe) {
+                exe.printStackTrace();
+            }
+            return userCrud;
+        }, executorService).thenAccept(response -> asyncResponse.resume(userCrud));
+    }
+
+    @GET
+    @Path("{userId : [0-9]*}")
+    public void getUsers(@Suspended AsyncResponse asyncResponse, @PathParam("userId") int userId) {
+        String info=uriInfo.getAbsolutePath().toString();
+        System.out.println(info);
+        CompletableFuture.supplyAsync(() -> {
+            try {
+                userCrud = userServiceImpl.getUser(info,userId);
             } catch (Exception exe) {
                 exe.printStackTrace();
             }
