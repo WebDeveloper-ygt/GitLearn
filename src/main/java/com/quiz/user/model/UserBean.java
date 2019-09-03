@@ -1,14 +1,12 @@
 package com.quiz.user.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.quiz.exam.model.ExamBean;
 import com.quiz.utils.Links;
-
-import org.glassfish.jersey.server.Uri;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @XmlRootElement(name = "user")
 public class UserBean {

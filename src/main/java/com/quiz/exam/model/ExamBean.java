@@ -1,11 +1,11 @@
 package com.quiz.exam.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.quiz.utils.Links;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @XmlRootElement(name = "exam")
 public class ExamBean {
