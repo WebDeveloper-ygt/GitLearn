@@ -31,6 +31,8 @@ public class MyResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getIt(){
+        String get =userimpl.getdetails(uriInfo.getAbsolutePath().toString());
+        System.out.println(get);
        return userimpl.getIt(uriInfo);
     }
 }

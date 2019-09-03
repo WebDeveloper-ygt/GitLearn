@@ -1,6 +1,8 @@
 package com.quiz.user;
 
+import java.net.URI;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -13,7 +15,6 @@ import com.quiz.user.model.UserBean;
 import com.quiz.utils.Links;
 
 import org.apache.log4j.Logger;
-import org.glassfish.jersey.server.Uri;
 
 public class UserServiceImpl implements UserServiceInterface{
 
@@ -73,4 +74,8 @@ public class UserServiceImpl implements UserServiceInterface{
         UserBean.print(uriInfo.getAbsolutePath().toString());
         return Response.status(Status.OK).entity(testModel).build();
     }
+
+	public String getdetails(String string) {
+		return string;
+	}
 }
