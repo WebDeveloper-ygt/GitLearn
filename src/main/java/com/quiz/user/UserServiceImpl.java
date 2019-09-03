@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserServiceInterface{
     }
 
     @Override
-    public Response getAllUsers(UriInfo uriInfo) {
+    public Response getAllUsers(String uriInfo) {
         Response allUsers = null;
         try {
             allUsers = UserServiceDAO.getAllUsers(uriInfo);

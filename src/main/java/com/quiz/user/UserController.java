@@ -38,10 +38,10 @@ public class UserController {
 
     @GET
     public void getAllUsers(@Suspended AsyncResponse asyncResponse) {
-        System.out.println(uriInfo.getAbsolutePath());
+        System.out.println(uriInfo.getAbsolutePath().toString());
         CompletableFuture.supplyAsync(() -> {
             try {
-                userCrud = userServiceImpl.getAllUsers(uriInfo);
+                userCrud = userServiceImpl.getAllUsers(uriInfo.getAbsolutePath().toString());
             } catch (Exception exe) {
                 exe.printStackTrace();
             }

@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 
 import com.quiz.exception.CustomException;
 import com.quiz.exception.ExceptionOccurred;
@@ -33,12 +32,12 @@ public class UserServiceDAO {
         LOG.info("Invoked :: " + this.getClass().getName());
     }
 
-    public static Response getAllUsers(UriInfo uriInfo) throws ExceptionOccurred, CustomException {
+    public static Response getAllUsers(String uriInfo) throws ExceptionOccurred, CustomException {
 
         return getUserDetailsInCommon(uriInfo, Constants.USERS, 0);
     }
 
-    private static Response getUserDetailsInCommon(UriInfo uriInfo, String statement, int id) throws CustomException {
+    private static Response getUserDetailsInCommon(String uriInfo, String statement, int id) throws CustomException {
         userList = new ArrayList<>();
 
         try {
