@@ -9,5 +9,5 @@ import javax.ws.rs.core.UriInfo;
 
 public interface UserServiceInterface {
 
-    Response getAllUsers(String uriInfo) throws ExceptionOccurred, CustomException;
+    Response getAllUsers(String uriInfo);
 }

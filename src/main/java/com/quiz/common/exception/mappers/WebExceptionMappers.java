@@ -40,7 +40,6 @@ public class WebExceptionMappers implements ExceptionMapper<WebApplicationExcept
             exceptionBean.setLinks(null);
             return Response.status(exception.getResponse().getStatus()).entity(exceptionBean).type(MediaType.APPLICATION_JSON).build();
         }
-
-        return Response.serverError().type(MediaType.APPLICATION_JSON).entity(exception).build();
+        return Response.serverError().type(MediaType.APPLICATION_JSON).build();
     }
 }

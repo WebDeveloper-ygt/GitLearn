@@ -33,16 +33,16 @@ public class HateoasUtils {
         return links;
     }
 
-    public static Response ResourceNotFound(String className, String uriInfo, int resourceId){
+    public static Response ResourceNotFound(String className, String uriInfo, int id){
         exceptionLink = new ArrayList<>();
         exceptionLink.add(getSelfDetails(uriInfo));
         if(className.equalsIgnoreCase(UserServiceDAO.class.getName())){
             return Response.status(Response.Status.NOT_FOUND).entity(
-                    new ExceptionBean("User Not Found", 404, "User with identification id" + resourceId + " not found", exceptionLink))
+                    new ExceptionBean("User Not Found", 404, "User with identification id " + ((id > 0)? id: "all") + " not found", exceptionLink))
                     .build();
         }else{
             return Response.status(Response.Status.NOT_FOUND).entity(
-                    new ExceptionBean("Resource Not Found", 404, "Resource with identification id" + resourceId + " not found", exceptionLink))
+                    new ExceptionBean("Resource Not Found", 404, "Resource with identification id" + (id) + " not found", exceptionLink))
                     .build();
         }
     }

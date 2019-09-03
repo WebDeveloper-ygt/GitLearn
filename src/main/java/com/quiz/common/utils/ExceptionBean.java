@@ -1,7 +1,9 @@
 package com.quiz.common.utils;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
+@XmlRootElement
 public class ExceptionBean {
 
     private String message;

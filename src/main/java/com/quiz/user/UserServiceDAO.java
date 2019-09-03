@@ -15,13 +15,14 @@ import javax.ws.rs.core.UriInfo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserServiceDAO {
 
     private static Connection dbConnection;
-    private static List<UserBean> userList;
+    private  List<UserBean> userList;
     private static String relMessage;
 
     private static final Logger LOG = Logger.getLogger(UserServiceDAO.class);
@@ -30,19 +31,19 @@ public class UserServiceDAO {
         LOG.info("Invoked ==> " + this.getClass().getName());
     }
 
-    public static Response getAllUsers(String uriInfo) throws CustomException {
+    public  Response getAllUsers(String uriInfo) throws CustomException{
 
          return getUserDetailsInCommon(uriInfo, Constants.USERS, 0);
     }
 
-    private static Response getUserDetailsInCommon(String uriInfo, String statement, int id) throws CustomException {
+    private  Response getUserDetailsInCommon(String uriInfo, String statement, int id) throws CustomException{
         userList = new ArrayList<>();
         dbConnection = ApiUtils.getDbConnection();
         try {
             PreparedStatement pst = dbConnection.prepareStatement(statement);
             ResultSet result = pst.executeQuery();
 
-            LOG.info("Executing query on database for user ==> " + ((id > 0)?id:Constants.ALL));
+            LOG.info("Executing query on database for user ==> " + ((id > 0) ? id : Constants.ALL));
             while (result.next()) {
                 UserBean user = new UserBean();
                 List<Links> links = new ArrayList<>();
@@ -63,8 +64,8 @@ public class UserServiceDAO {
                 user.setLinks(links);
                 userList.add(user);
             }
-        } catch (Exception exe) {
-            return null;
+        }catch (SQLException sqlException){
+            sqlException.printStackTrace();
         }
         LOG.info("Number of User retrieved from the database is ==> " + userList.size());
         if (userList.size() > 0) {

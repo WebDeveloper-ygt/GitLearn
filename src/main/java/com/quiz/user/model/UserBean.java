@@ -1,12 +1,12 @@
 package com.quiz.user.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.quiz.exam.model.ExamBean;
 import com.quiz.common.utils.Links;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @XmlRootElement(name = "user")
 public class UserBean {
@@ -112,5 +112,9 @@ public class UserBean {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public static void print(String Uri) {
+        System.out.println(Uri);
     }
 }

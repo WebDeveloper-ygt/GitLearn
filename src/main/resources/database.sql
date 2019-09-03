@@ -62,6 +62,11 @@ VALUES
 ('VinayakRG','Vinayak',
 'Girennavar','vrg@gmail.com','8050805086','Manipal University','ODA1MDgwNTA4Mw==');
 
+INSERT INTO `quizapi`.`quiz_users`
+(`userName`,`firstName`,`lastName`,`emailId`,`phoneNumber`,`instituteName`,`password`)
+VALUES
+('GireeshBD','Gireesh',
+'Devaraddi','gbd@gmail.com','8105080953','Manipal University','ODA1MDgwNTA4Mw==');
 
 
 

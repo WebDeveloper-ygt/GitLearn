@@ -3,10 +3,7 @@ package com.quiz.user;
 import com.quiz.common.utils.ThreadExecutor;
 import org.apache.log4j.Logger;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.Context;
@@ -39,7 +36,8 @@ public class UserController {
         String uriPath = uriInfo.getAbsolutePath().toString();
         LOG.info("Called URI ==> " + uriPath);
         CompletableFuture.supplyAsync(() -> {
-            return userServiceImpl.getAllUsers(uriPath);
-        }, executorService).thenAccept(response -> asyncResponse.resume(userCrud));
+            userCrud=userServiceImpl.getAllUsers(uriPath);
+            return userCrud;
+        }, executorService).thenAccept(response -> asyncResponse.resume(response));
     }
 }
