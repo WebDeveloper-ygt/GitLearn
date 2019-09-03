@@ -1,19 +1,27 @@
 package com.quiz.user;
 
+import java.util.ArrayList;
+
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
 import com.quiz.exception.CustomException;
 import com.quiz.exception.ExceptionOccurred;
+import com.quiz.user.model.TestModel;
 import com.quiz.user.model.UserBean;
+import com.quiz.utils.Links;
 
 import org.apache.log4j.Logger;
+import org.glassfish.jersey.server.Uri;
 
 public class UserServiceImpl implements UserServiceInterface{
 
     private static final Logger LOG = Logger.getLogger(UserServiceImpl.class);
     private static final UserServiceDAO userDao = new UserServiceDAO();
-
+    List<Links> links;
+    Links link;
+    
     public UserServiceImpl() {
         LOG.info("Invoked :: " +this.getClass().getName());
     }
@@ -47,5 +55,22 @@ public class UserServiceImpl implements UserServiceInterface{
     @Override
     public Response deleteUser(int userId, UriInfo uriInfo) {
         return null;
+    }
+
+
+    public Response getIt(UriInfo uriInfo){
+        links = new ArrayList<>();
+        link = new Links();
+        TestModel testModel = new TestModel();
+        testModel.setAge(20);
+        testModel.setName("Openshidt");
+        testModel.setJob("container");
+        link.setAction("GET");
+        link.setLink(uriInfo.getAbsolutePath().toString());
+        link.setRef("self");
+        links.add(link);
+        testModel.setLinks(links);
+        UserBean.print(uriInfo.getAbsolutePath().toString());
+        return Response.status(Status.OK).entity(testModel).build();
     }
 }

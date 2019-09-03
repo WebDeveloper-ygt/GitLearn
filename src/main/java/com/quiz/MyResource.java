@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
+import com.quiz.user.UserServiceImpl;
 import com.quiz.user.model.TestModel;
 import com.quiz.user.model.UserBean;
 import com.quiz.utils.Links;
@@ -21,25 +22,15 @@ import com.quiz.utils.Links;
  */
 @Path("myresource")
 public class MyResource {
+
+    private static final UserServiceImpl userimpl = new UserServiceImpl();
+
     @Context
     UriInfo uriInfo;
-    List<Links> links;
-    Links link;
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getIt() {
-        links = new ArrayList<>();
-        link = new Links();
-        TestModel testModel = new TestModel();
-        testModel.setAge(20);
-        testModel.setName("Openshidt");
-        testModel.setJob("container");
-        link.setAction("GET");
-        link.setLink(uriInfo.getAbsolutePath().toString());
-        link.setRef("self");
-        links.add(link);
-        testModel.setLinks(links);
-        UserBean.print(uriInfo.getAbsolutePath().toString());
-        return Response.status(Status.OK).entity(testModel).build();
+    public Response getIt(){
+       return userimpl.getIt(uriInfo);
     }
 }
