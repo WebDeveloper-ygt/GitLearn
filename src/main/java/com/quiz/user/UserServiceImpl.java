@@ -42,7 +42,7 @@ public class UserServiceImpl {
         Response allUsers = null;
         try {
             allUsers = userDao.getUser(uriInfo,userId);
-        } catch (ExceptionOccurred | CustomException exceptionOccurred) {
+        } catch (CustomException exceptionOccurred) {
             exceptionOccurred.printStackTrace();
         }
         return allUsers;
