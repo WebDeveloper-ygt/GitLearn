@@ -16,7 +16,7 @@ import com.quiz.utils.Links;
 
 import org.apache.log4j.Logger;
 
-public class UserServiceImpl implements UserServiceInterface{
+public class UserServiceImpl {
 
     private static final Logger LOG = Logger.getLogger(UserServiceImpl.class);
     private static final UserServiceDAO userDao = new UserServiceDAO();
@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserServiceInterface{
         LOG.info("Invoked :: " +this.getClass().getName());
     }
 
-    @Override
+    
     public Response getAllUsers(String uriInfo) {
         Response allUsers = null;
         try {
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserServiceInterface{
         return allUsers;
     }
 
-    @Override
+   /*  @Override
     public Response getUser(int userId, UriInfo uriInfo) {
         return null;
     }
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserServiceInterface{
     public Response deleteUser(int userId, UriInfo uriInfo) {
         return null;
     }
-
+ */
 
     public Response getIt(UriInfo uriInfo){
         links = new ArrayList<>();
