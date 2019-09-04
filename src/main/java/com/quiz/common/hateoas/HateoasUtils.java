@@ -6,6 +6,7 @@ import com.quiz.common.utils.Links;
 import com.quiz.user.UserServiceDAO;
 import org.apache.log4j.Logger;
 
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.ArrayList;
@@ -45,5 +46,14 @@ public class HateoasUtils {
                     new ExceptionBean("Resource Not Found", 404, "Resource with identification id" + (id) + " not found", exceptionLink))
                     .build();
         }
+    }
+
+    public static Response DbConnectionException(String message) {
+            ExceptionBean exceptionBean = new ExceptionBean();
+            exceptionBean.setDescription(message);
+            exceptionBean.setStatusCode(500);
+            exceptionBean.setMessage("Could not connect to database or We found some Database Exception");
+            exceptionBean.setLinks(null);
+            return  Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(exceptionBean).type(MediaType.APPLICATION_JSON).build();
     }
 }

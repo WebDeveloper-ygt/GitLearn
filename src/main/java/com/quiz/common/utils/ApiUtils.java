@@ -28,9 +28,15 @@ public class ApiUtils {
             Class.forName(DRIVER);
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
             LOG.info("Connection happened");
+            return connection;
         } catch (Exception exe) {
-            exe.printStackTrace();
+            System.out.println(exe.toString());
+            return connection;
         }
-        return connection;
+
+    }
+
+    public static Connection getDSConnection(){
+      return null;
     }
 }

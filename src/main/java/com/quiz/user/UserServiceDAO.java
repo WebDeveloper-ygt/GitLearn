@@ -10,6 +10,7 @@ import com.quiz.common.utils.Links;
 import org.apache.log4j.Logger;
 
 import javax.ws.rs.core.GenericEntity;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.sql.Connection;
@@ -21,8 +22,8 @@ import java.util.List;
 
 public class UserServiceDAO {
 
-    private static Connection dbConnection;
-    private  List<UserBean> userList;
+
+    private List<UserBean> userList;
     private static String relMessage;
 
     private static final Logger LOG = Logger.getLogger(UserServiceDAO.class);
@@ -31,14 +32,18 @@ public class UserServiceDAO {
         LOG.info("Invoked ==> " + this.getClass().getName());
     }
 
-    public  Response getAllUsers(String uriInfo) throws CustomException{
+    public Response getAllUsers(String uriInfo) throws CustomException {
 
-         return getUserDetailsInCommon(uriInfo, Constants.USERS, 0);
+        return getUserDetailsInCommon(uriInfo, Constants.USERS, 0);
     }
 
-    private  Response getUserDetailsInCommon(String uriInfo, String statement, int id) throws CustomException{
-        userList = new ArrayList<>();
-        dbConnection = ApiUtils.getDbConnection();
+    private Response getUserDetailsInCommon(String uriInfo, String statement, int id) throws CustomException {
+
+        Connection dbConnection = ApiUtils.getDbConnection();
+        if (dbConnection == null) {
+            return HateoasUtils.DbConnectionException("com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure");
+           // throw new CustomException("com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure");
+        }
         try {
             PreparedStatement pst = dbConnection.prepareStatement(statement);
             ResultSet result = pst.executeQuery();
@@ -64,14 +69,16 @@ public class UserServiceDAO {
                 user.setLinks(links);
                 userList.add(user);
             }
-        }catch (SQLException sqlException){
-            sqlException.printStackTrace();
+        } catch (SQLException sqlException) {
+            return HateoasUtils.DbConnectionException(sqlException.getMessage());
         }
         LOG.info("Number of User retrieved from the database is ==> " + userList.size());
         if (userList.size() > 0) {
-            return Response.status(Response.Status.OK).entity(new GenericEntity<List<UserBean>>(userList){}).build();
+            return Response.status(Response.Status.OK).entity(new GenericEntity<List<UserBean>>(userList) {
+            }).build();
         } else {
-            return HateoasUtils.ResourceNotFound(UserServiceDAO.class.getName(),uriInfo,id);
+            return HateoasUtils.ResourceNotFound(UserServiceDAO.class.getName(), uriInfo, id);
         }
+
     }
 }

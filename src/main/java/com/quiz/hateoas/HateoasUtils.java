@@ -42,4 +42,6 @@ public class HateoasUtils {
         }
         return  Response.status(Response.Status.NOT_FOUND).entity(exceptionBean).type(MediaType.APPLICATION_JSON).build();
     }
+
+
 }

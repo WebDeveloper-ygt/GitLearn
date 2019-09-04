@@ -1,5 +1,6 @@
 package com.quiz.user;
 
+import com.quiz.common.exception.CustomException;
 import com.quiz.common.utils.ThreadExecutor;
 import org.apache.log4j.Logger;
 
@@ -35,7 +36,7 @@ public class UserController {
     public void getAllUsers(@Suspended AsyncResponse asyncResponse) {
         String uriPath = uriInfo.getAbsolutePath().toString();
         LOG.info("Called URI ==> " + uriPath);
-        CompletableFuture.supplyAsync(() -> {
+        CompletableFuture<Void> future =CompletableFuture.supplyAsync(() -> {
             userCrud=userServiceImpl.getAllUsers(uriPath);
             return userCrud;
         }, executorService).thenAccept(response -> asyncResponse.resume(response));

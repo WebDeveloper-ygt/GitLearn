@@ -2,7 +2,7 @@ package com.quiz.user.model;
 
 import java.util.List;
 
-import com.quiz.utils.Links;
+import com.quiz.common.utils.Links;
 
 public class TestModel {
 
