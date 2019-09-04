@@ -14,7 +14,6 @@ import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.*;
 import java.sql.Connection;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 
 /**

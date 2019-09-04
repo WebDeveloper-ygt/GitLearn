@@ -117,4 +117,21 @@ public class UserBean {
     public static void print(String Uri) {
         System.out.println(Uri);
     }
+
+    @Override
+    public String toString() {
+        return "UserBean{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", emailId='" + emailId + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                ", exams=" + exams +
+                ", instituteName='" + instituteName + '\'' +
+                ", links=" + links +
+                '}';
+    }
 }

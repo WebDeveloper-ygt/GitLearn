@@ -1,6 +1,6 @@
 package com.quiz.common.hateoas;
 
-import com.quiz.common.utils.ExceptionBean;
+import com.quiz.common.exception.ExceptionBean;
 import com.quiz.common.utils.Links;
 import com.quiz.user.UserServiceDAO;
 import org.apache.log4j.Logger;
@@ -33,6 +33,7 @@ public class HateoasUtils {
     }
 
     public static Response ResourceNotFound(String className, String uriInfo, int id){
+        LOG.error("ResourceNotFound Exception thrown in class ==> " + className);
         exceptionLink = new ArrayList<>();
         exceptionLink.add(getSelfDetails(uriInfo));
         if(className.equalsIgnoreCase(UserServiceDAO.class.getName())){
@@ -47,11 +48,33 @@ public class HateoasUtils {
     }
 
     public static Response DbConnectionException(String message) {
+        LOG.error("DBConnection Exception thrown ==> " + message);
             ExceptionBean exceptionBean = new ExceptionBean();
             exceptionBean.setDescription(message);
             exceptionBean.setStatusCode(500);
             exceptionBean.setMessage("Could not connect to database or We found some Database Exception");
             exceptionBean.setLinks(null);
             return  Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(exceptionBean).type(MediaType.APPLICATION_JSON).build();
+    }
+
+    public static Response ResourceFound(String className, String uriInfo, String emailId) {
+        LOG.error("ResourceFound Exception thrown in class ==> " + className);
+        exceptionLink = new ArrayList<>();
+        exceptionLink.add(getSelfDetails(uriInfo));
+        if(className.equalsIgnoreCase(UserServiceDAO.class.getName())){
+            return Response.status(Response.Status.BAD_REQUEST).entity(
+                    new ExceptionBean("User Is already present", 400, "User with identification id " + emailId + " is already present", exceptionLink))
+                    .build();
+        }else{
+            return Response.status(Response.Status.BAD_REQUEST).entity(
+                    new ExceptionBean("Resource is already present", 400, "Resource with identical identifications is already present", exceptionLink))
+                    .build();
+        }
+    }
+
+    public static Response badPostRequest() {
+        return Response.status(Response.Status.BAD_REQUEST).entity(
+                new ExceptionBean("Input is invalid", 400, "Please check the input provided for resource creation/update", exceptionLink))
+                .build();
     }
 }

@@ -1,7 +1,7 @@
 package com.quiz.common.exception.mappers;
 
 import com.quiz.common.exception.CustomException;
-import com.quiz.common.utils.ExceptionBean;
+import com.quiz.common.exception.ExceptionBean;
 import org.apache.log4j.Logger;
 
 import javax.ws.rs.core.MediaType;

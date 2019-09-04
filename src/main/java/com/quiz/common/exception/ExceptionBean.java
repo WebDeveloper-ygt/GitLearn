@@ -1,4 +1,6 @@
-package com.quiz.common.utils;
+package com.quiz.common.exception;
+
+import com.quiz.common.utils.Links;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
@@ -14,7 +16,7 @@ public class ExceptionBean {
     public ExceptionBean() {
     }
 
-    public ExceptionBean(String message, int statusCode, String description, List<Links>links) {
+    public ExceptionBean(String message, int statusCode, String description, List<Links> links) {
         this.message = message;
         this.statusCode = statusCode;
         this.description = description;

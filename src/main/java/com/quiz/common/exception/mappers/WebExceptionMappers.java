@@ -1,6 +1,6 @@
 package com.quiz.common.exception.mappers;
 
-import com.quiz.common.utils.ExceptionBean;
+import com.quiz.common.exception.ExceptionBean;
 import com.quiz.common.utils.Links;
 import org.apache.log4j.Logger;
 
