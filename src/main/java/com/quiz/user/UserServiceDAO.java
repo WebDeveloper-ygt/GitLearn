@@ -1,7 +1,6 @@
 package com.quiz.user;
 
 import com.quiz.common.exception.CustomException;
-import com.quiz.common.exception.ExceptionOccurred;
 import com.quiz.common.hateoas.HateoasUtils;
 import com.quiz.user.model.UserBean;
 import com.quiz.common.utils.ApiUtils;
@@ -10,9 +9,7 @@ import com.quiz.common.utils.Links;
 import org.apache.log4j.Logger;
 
 import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,7 +35,7 @@ public class UserServiceDAO {
     }
 
     private Response getUserDetailsInCommon(String uriInfo, String statement, int id) throws CustomException {
-
+        userList = new ArrayList<>();
         Connection dbConnection = ApiUtils.getDbConnection();
         if (dbConnection == null) {
             return HateoasUtils.DbConnectionException("com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure");
@@ -67,18 +64,24 @@ public class UserServiceDAO {
                     links.add(HateoasUtils.getSelfDetails(uriInfo));
                 }
                 user.setLinks(links);
+               // System.out.println(user.getEmailId() + " ==> " +user.toString());
                 userList.add(user);
+                //System.out.println(userList.size());
+            }
+            LOG.info("Number of User retrieved from the database is ==> " + userList.size());
+            if (userList.size() > 0) {
+                return Response.status(Response.Status.OK).entity(new GenericEntity<List<UserBean>>(userList) {
+                }).build();
+            } else {
+                return HateoasUtils.ResourceNotFound(UserServiceDAO.class.getName(), uriInfo, id);
             }
         } catch (SQLException sqlException) {
             return HateoasUtils.DbConnectionException(sqlException.getMessage());
         }
-        LOG.info("Number of User retrieved from the database is ==> " + userList.size());
-        if (userList.size() > 0) {
-            return Response.status(Response.Status.OK).entity(new GenericEntity<List<UserBean>>(userList) {
-            }).build();
-        } else {
-            return HateoasUtils.ResourceNotFound(UserServiceDAO.class.getName(), uriInfo, id);
-        }
 
+    }
+
+    public Response getUser(String uriInfo,int userId) {
+        return getUserDetailsInCommon(uriInfo,Constants.USERS_ID+ userId, userId);
     }
 }

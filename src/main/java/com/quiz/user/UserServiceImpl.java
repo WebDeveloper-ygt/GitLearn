@@ -1,12 +1,8 @@
 package com.quiz.user;
 
-import com.quiz.common.exception.CustomException;
-import com.quiz.common.exception.ExceptionOccurred;
-import com.quiz.user.model.UserBean;
 import org.apache.log4j.Logger;
 
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 
 public class UserServiceImpl implements UserServiceInterface{
 
@@ -24,4 +20,9 @@ public class UserServiceImpl implements UserServiceInterface{
         return userCrud;
     }
 
+    @Override
+    public Response getUser(String uriInfo, int userId) {
+        userCrud = userDao.getUser(uriInfo,userId);
+        return userCrud;
+    }
 }

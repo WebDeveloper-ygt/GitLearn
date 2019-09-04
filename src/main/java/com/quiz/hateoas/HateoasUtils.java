@@ -8,14 +8,13 @@ import org.apache.log4j.Logger;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
 public class HateoasUtils {
     private static final Logger LOG = Logger.getLogger(HateoasUtils.class);
     private static Links links;
     private static List<Links> linksList;
-    public static Links getDetailsById(String uriInfo, int userId, String relMessage) {
+    private static Links getDetailsById(String uriInfo, int userId, String relMessage) {
         links = new Links();
         links.setLink(uriInfo +userId);
         links.setRef(relMessage);

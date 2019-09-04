@@ -1,16 +1,9 @@
 package com.quiz;
 
-import com.google.common.base.Supplier;
 import com.quiz.common.exception.CustomException;
-import com.quiz.common.hateoas.HateoasUtils;
 import com.quiz.common.utils.ApiUtils;
-import com.quiz.common.utils.Constants;
-import com.quiz.common.utils.Links;
 import com.quiz.common.utils.ThreadExecutor;
-import com.quiz.user.UserController;
-import com.quiz.user.UserServiceDAO;
 import com.quiz.user.UserServiceImpl;
-import com.quiz.user.model.UserBean;
 import org.apache.log4j.Logger;
 
 import javax.ws.rs.GET;
@@ -20,12 +13,6 @@ import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.*;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -68,7 +55,7 @@ public class MyResource {
     @GET
     @Path("/controller")
     @Produces(MediaType.APPLICATION_JSON)
-    public void getAsync(@Suspended AsyncResponse asyncResponse) throws ExecutionException, InterruptedException {
+    public void getAsync(@Suspended AsyncResponse asyncResponse) {
         CompletableFuture.supplyAsync(()->{
             TestModel testModel = new TestModel();
             testModel.setAge(20);
@@ -76,6 +63,6 @@ public class MyResource {
             testModel.setName("Openshift");
             testModel.setLinks(null);
             return testModel;
-        }).thenAccept(response-> asyncResponse.resume(response));
+        }).thenAccept(asyncResponse::resume);
     }
 }

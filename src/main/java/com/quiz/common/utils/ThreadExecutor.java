@@ -1,6 +1,5 @@
 package com.quiz.common.utils;
 
-import com.quiz.user.UserServiceImpl;
 import org.apache.log4j.Logger;
 
 import java.util.concurrent.ExecutorService;

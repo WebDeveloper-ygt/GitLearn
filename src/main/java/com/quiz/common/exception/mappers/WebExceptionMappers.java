@@ -1,7 +1,5 @@
 package com.quiz.common.exception.mappers;
 
-import com.quiz.common.exception.CustomException;
-import com.quiz.common.hateoas.HateoasUtils;
 import com.quiz.common.utils.ExceptionBean;
 import com.quiz.common.utils.Links;
 import org.apache.log4j.Logger;
@@ -19,9 +17,9 @@ public class WebExceptionMappers implements ExceptionMapper<WebApplicationExcept
 
     private static final Logger LOG = Logger.getLogger(WebExceptionMappers.class);
 
-    ExceptionBean exceptionBean;
-    Links links;
-    List<Links> linksList ;
+    private ExceptionBean exceptionBean;
+    private Links links;
+    private List<Links> linksList ;
     @Override
     public Response toResponse(WebApplicationException exception) {
         exceptionBean = new ExceptionBean();

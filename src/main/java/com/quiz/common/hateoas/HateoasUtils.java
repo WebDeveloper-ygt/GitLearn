@@ -1,6 +1,5 @@
 package com.quiz.common.hateoas;
 
-import com.quiz.common.exception.CustomException;
 import com.quiz.common.utils.ExceptionBean;
 import com.quiz.common.utils.Links;
 import com.quiz.user.UserServiceDAO;
@@ -8,7 +7,6 @@ import org.apache.log4j.Logger;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +19,7 @@ public class HateoasUtils {
     public static Links getDetailsById(String uriInfo, int userId, String relMessage) {
         //LOG.info("getDetailsById ==> " + uriInfo);
         links = new Links();
-        links.setLink(uriInfo+userId);
+        links.setLink(uriInfo+"/"+userId);
         links.setRef(relMessage);
         return links;
     }
