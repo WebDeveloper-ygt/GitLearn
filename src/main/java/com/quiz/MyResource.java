@@ -54,20 +54,6 @@ public class MyResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getIt() {
 
-       /* userList = new ArrayList<>();
-        try {
-            Connection dbConnection = ApiUtils.getDbConnection();
-            LOG.info("Retuned connection object is ==> " + ((dbConnection != null) ? dbConnection.toString() : null));
-            if (dbConnection == null) {
-                LOG.info("DBConnection Failure => ");
-                throw new CustomException("Failed to connect databse");
-            } else {
-
-            }
-        }catch (Exception exe){
-            throw new CustomException(exe.getMessage());
-        }
-*/
         try{
             Connection connection = ApiUtils.getDbConnection();
             if(connection == null){
@@ -80,17 +66,16 @@ public class MyResource {
     }
 
     @GET
-    @Path("/async")
+    @Path("/controller")
     @Produces(MediaType.APPLICATION_JSON)
     public void getAsync(@Suspended AsyncResponse asyncResponse) throws ExecutionException, InterruptedException {
-        CompletableFuture<Response> completableFuture = CompletableFuture.supplyAsync(()->userServiceImpl.getAllUsers(uriInfo.getAbsolutePath().toString()));
-      // CompletableFuture.supplyAsync(MyResource::getUsers);
-
-            Response response = completableFuture.get();
-        asyncResponse.resume(response);
-
-    }
-    public static Response getUsers(){
-        return userServiceImpl.getAllUsers("");
+        CompletableFuture.supplyAsync(()->{
+            TestModel testModel = new TestModel();
+            testModel.setAge(20);
+            testModel.setJob("Enginner");
+            testModel.setName("Openshift");
+            testModel.setLinks(null);
+            return testModel;
+        }).thenAccept(response-> asyncResponse.resume(response));
     }
 }

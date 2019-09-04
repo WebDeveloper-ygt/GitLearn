@@ -1,4 +1,4 @@
-package com.quiz.user.model;
+package com.quiz;
 
 import java.util.List;
 
