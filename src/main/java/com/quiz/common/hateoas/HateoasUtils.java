@@ -18,8 +18,10 @@ public class HateoasUtils {
 
     public static Links getDetailsById(String uriInfo, int userId, String relMessage) {
         //LOG.info("getDetailsById ==> " + uriInfo);
+        //System.out.println((uriInfo.charAt(uriInfo.length()-1) == '/' )+" == " + uriInfo.substring(uriInfo.length()-1) + " === " +uriInfo);
+        uriInfo=(uriInfo.charAt(uriInfo.length()-1) == '/') ? uriInfo : uriInfo+"/";
         links = new Links();
-        links.setLink(uriInfo+"/"+userId);
+        links.setLink(uriInfo+userId);
         links.setRef(relMessage);
         return links;
     }

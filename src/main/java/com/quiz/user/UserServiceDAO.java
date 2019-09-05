@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -166,6 +167,37 @@ public class UserServiceDAO {
                 return HateoasUtils.badPostRequest();
             }
         } else if (checkUser.getStatus() == 500) {
+            return HateoasUtils.DbConnectionException("We are facing problems in connecting database");
+        } else {
+            LOG.error("User Not Found ==> " + userId);
+            return HateoasUtils.ResourceNotFound(UserServiceDAO.class.getName(), uriInfo, userId);
+        }
+    }
+
+    public Response delerteUser(String uriInfo, int userId) {
+        Response checkUser = getUserDetailsInCommon(uriInfo, Constants.USERS_ID + userId, userId);
+        if (checkUser.getStatus() == 200) {
+            LOG.info("User delete Request recieved ==>");
+            Connection dbConnection = ApiUtils.getDbConnection();
+            if (dbConnection == null) {
+                return HateoasUtils.DbConnectionException("com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure");
+            }
+            try {
+                Statement createStatement = dbConnection.createStatement();
+                int executeDelete = createStatement.executeUpdate(Constants.USER_DELETE + userId);
+                if(executeDelete == 1){
+                    exceptionLink = new ArrayList<>();
+                    exceptionLink.add(HateoasUtils.getSelfDetails(uriInfo));
+                    return Response.status(Response.Status.OK).entity(new ExceptionBean("User Deleted", 200,
+                            "User with user Id " + userId + " deleted", exceptionLink)).build();
+                } else {
+                    return HateoasUtils.ResourceNotFound(UserServiceDAO.class.getName(),uriInfo,userId);
+                }
+            }catch (Exception sqlException){
+                sqlException.printStackTrace();
+                return HateoasUtils.DbConnectionException(sqlException.getMessage());
+            }
+        }else if (checkUser.getStatus() == 500) {
             return HateoasUtils.DbConnectionException("We are facing problems in connecting database");
         } else {
             LOG.error("User Not Found ==> " + userId);

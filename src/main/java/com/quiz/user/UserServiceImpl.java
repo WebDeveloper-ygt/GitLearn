@@ -44,4 +44,10 @@ public class UserServiceImpl implements UserServiceInterface{
         LOG.info("User Under validation to update ==> " + userBean.toString());
         return userDao.updateUser(uriPath,userBean,userId);
     }
+
+    @Override
+    public Response deleteUser(String uriPath, int userId) {
+        LOG.info("User Under validation to delete ==> " + userId);
+        return userDao.delerteUser(uriPath,userId);
+    }
 }

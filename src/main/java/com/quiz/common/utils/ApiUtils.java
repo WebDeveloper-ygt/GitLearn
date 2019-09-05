@@ -3,6 +3,7 @@ package com.quiz.common.utils;
 import org.apache.log4j.Logger;
 import org.eclipse.persistence.exceptions.ConcurrencyException;
 
+import javax.annotation.Resource;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -25,10 +26,10 @@ public class ApiUtils {
         LOG.info("Invoked " + this.getClass().getName());
     }
 
-    public static Connection getDSConnection() {
+    public static Connection getDbConnection() {
         try {
             Class.forName(DRIVER);
-            connection = DriverManager.getConnection(L_URL, USER, PASSWORD);
+            connection = DriverManager.getConnection(URL, USER, PASSWORD);
             LOG.info("Connection happened");
             return connection;
         } catch (Exception exe) {
@@ -38,12 +39,12 @@ public class ApiUtils {
 
     }
 
-    public static Connection getDbConnection() {
+    public static Connection getDSConnection() {
         Connection connection = null;
         try {
             Context initContext = new InitialContext();
-            Context envContext = (Context) initContext.lookup("java:comp/env");
-            DataSource dsContext = (DataSource) envContext.lookup("jdbc/quizapiDS");
+           // Context envContext = (Context) initContext.lookup("java:comp/env");
+            DataSource dsContext = (DataSource) initContext.lookup("java:comp/env/jdbc/quizapiDS");
             connection = dsContext.getConnection();
             return connection;
         } catch (NamingException | SQLException exe) {

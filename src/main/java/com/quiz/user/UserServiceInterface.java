@@ -10,4 +10,5 @@ public interface UserServiceInterface {
     Response getUser(String uriInfo, int userId);
     Response addUser(String uriPath, UserBean userBean);
     Response updateUSer(String uriPath, UserBean userBean,int userId);
+    Response deleteUser(String uriPath, int userId);
 }

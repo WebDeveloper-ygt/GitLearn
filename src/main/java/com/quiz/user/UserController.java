@@ -17,6 +17,7 @@ import java.util.concurrent.ExecutorService;
 
 @Path("/users")
 @Consumes({MediaType.APPLICATION_JSON})
+@Produces({MediaType.APPLICATION_JSON})
 public class UserController {
 
     private static final ExecutorService executorService = new ThreadExecutor().getExecutor();
@@ -59,6 +60,15 @@ public class UserController {
         String uriPath = uriInfo.getAbsolutePath().toString();
         LOG.info("Called URI ==> " + uriPath);
         CompletableFuture<Void> future =CompletableFuture.supplyAsync(() -> userServiceImpl.updateUSer(uriPath,userBean,userId), executorService).thenAccept(asyncResponse::resume);
+
+    }
+
+    @DELETE
+    @Path("{userId : [0-9]*}")
+    public void delateUser(@Suspended AsyncResponse asyncResponse,@PathParam("userId") int userId){
+        String uriPath = uriInfo.getAbsolutePath().toString();
+        LOG.info("Called URI ==> " + uriPath);
+        CompletableFuture<Void> future =CompletableFuture.supplyAsync(() -> userServiceImpl.deleteUser(uriPath,userId), executorService).thenAccept(asyncResponse::resume);
 
     }
 }

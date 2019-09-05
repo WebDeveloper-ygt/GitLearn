@@ -37,6 +37,14 @@ public class WebExceptionMappers implements ExceptionMapper<WebApplicationExcept
             //linksList.add(links);
             exceptionBean.setLinks(null);
             return Response.status(exception.getResponse().getStatus()).entity(exceptionBean).type(MediaType.APPLICATION_JSON).build();
+        }else if(response.getStatus() == 404){
+            exceptionBean.setStatusCode(response.getStatus());
+            exceptionBean.setMessage(response.getStatusInfo().getReasonPhrase());
+            exceptionBean.setDescription("Requested URI is not found, Please access with correct parameters");
+            //links = HateoasUtils.getDocumentationLink();
+            //linksList.add(links);
+            exceptionBean.setLinks(null);
+            return Response.status(exception.getResponse().getStatus()).entity(exceptionBean).type(MediaType.APPLICATION_JSON).build();
         }
         return Response.serverError().type(MediaType.APPLICATION_JSON).build();
     }
