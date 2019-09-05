@@ -1,1 +1,81 @@
 GET http://localhost:9999/quiz/api/test HTTP/1.1
+
+
+GET http://localhost:9999/quiz/api/test/controller HTTP/1.1
+
+GET http://localhost:9999/quiz/api/users/ HTTP/1.1
+Content-Type: application/json
+
+GET http://localhost:9999/quiz/api/users/r HTTP/1.1
+Content-Type: application/json
+
+GET http://localhost:9999/quiz/api/users/11 HTTP/1.1
+Content-Type: application/json
+
+GET http://localhost:9999/quiz/api/users/25 HTTP/1.1
+Content-Type: application/json
+
+POST http://localhost:9999/quiz/api/users/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "emailId": "devaraddisantu@gmail.com",
+    "firstName": "Santosh",
+    "instituteName": "BEC",
+    "lastName": "Devaraddi",
+    "phoneNumber": "8105080954",
+    "userName": "SantoshRaddi",
+    "password": "8105080954"    
+  }
+
+//bad request
+
+POST http://localhost:9999/quiz/api/users/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "emailId": "devaraddisantu@gmail.com",
+    "firstName": "Santosh",
+    "instituteName": "BEC",
+    "phoneNumber": "8105080954",
+    "userName": "SantoshRaddi",
+    "password": "8105080954"    
+  }
+
+PUT http://localhost:9999/quiz/api/users/11 HTTP/1.1
+Content-Type: application/json
+
+{
+    "emailId": "devaraddiramesh@gmail.com",
+    "firstName": "Ramesh",
+    "instituteName": "SBHS",
+    "lastName": "Devaraddi",
+    "phoneNumber": "9888777666",
+    "userName": "RameshRaddi",
+    "password": "9888777666"    
+}
+
+//bad request
+
+PUT http://localhost:9999/quiz/api/users/r HTTP/1.1
+Content-Type: application/json
+
+{
+    "emailId": "devaraddiramesh@gmail.com",
+    "firstName": "Ramesh",
+    "instituteName": "SBHS",
+    "lastName": "Devaraddi",
+    "phoneNumber": "9888777666",
+    "userName": "RameshRaddi",
+    "password": "9888777666"    
+}
+
+
+DELETE http://localhost:9999/quiz/api/users/r HTTP/1.1
+Content-Type: application/json
+
+DELETE http://localhost:9999/quiz/api/users/25 HTTP/1.1
+Content-Type: application/json
+
+DELETE http://localhost:9999/quiz/api/users/11 HTTP/1.1
+Content-Type: application/json

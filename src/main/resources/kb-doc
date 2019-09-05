@@ -1,0 +1,51 @@
+java:jboss/datasources/ExampleDS
+
+[0m[31m18:05:08,074 ERROR [org.jboss.msc.service.fail] (MSC service thread 1-2) MSC000001: Failed to start service jboss.deployment.unit."quiz.war".PARSE: org.jboss.msc.service.StartException in service jboss.deployment.unit."quiz.war".PARSE: WFLYSRV0153: Failed to process phase PARSE of deployment "quiz.war"
+	at org.jboss.as.server.deployment.DeploymentUnitPhaseService.start(DeploymentUnitPhaseService.java:172)
+	at org.jboss.msc.service.ServiceControllerImpl$StartTask.startService(ServiceControllerImpl.java:2032)
+	at org.jboss.msc.service.ServiceControllerImpl$StartTask.run(ServiceControllerImpl.java:1955)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.jboss.as.server.deployment.DeploymentUnitProcessingException: WFLYUT0027: Failed to parse XML descriptor "/content/quiz.war/WEB-INF/web.xml" at [27,9]
+	at org.wildfly.extension.undertow.deployment.WebParsingDeploymentProcessor.deploy(WebParsingDeploymentProcessor.java:129)
+	at org.jboss.as.server.deployment.DeploymentUnitPhaseService.start(DeploymentUnitPhaseService.java:165)
+	... 5 more
+Caused by: javax.xml.stream.XMLStreamException: ParseError at [row,col]:[27,9]
+Message: Unexpected element 'res-ref-type' encountered
+	at org.jboss.metadata.parser.util.MetaDataElementParser.unexpectedElement(MetaDataElementParser.java:115)
+	at org.jboss.metadata.parser.ee.ResourceReferenceMetaDataParser.parse(ResourceReferenceMetaDataParser.java:94)
+	at org.jboss.metadata.parser.ee.EnvironmentRefsGroupMetaDataParser.parseRemote(EnvironmentRefsGroupMetaDataParser.java:124)
+	at org.jboss.metadata.parser.ee.EnvironmentRefsGroupMetaDataParser.parse(EnvironmentRefsGroupMetaDataParser.java:81)
+	at org.jboss.metadata.parser.servlet.WebMetaDataParser.parse(WebMetaDataParser.java:187)
+	at org.jboss.metadata.parser.servlet.WebMetaDataParser.parse(WebMetaDataParser.java:57)
+	at org.wildfly.extension.undertow.deployment.WebParsingDeploymentProcessor.deploy(WebParsingDeploymentProcessor.java:96)
+	... 6 more
+
+[0m[0m18:05:12,469 INFO  [org.infinispan.remoting.transport.jgroups.JGroupsTransport] (MSC service thread 1-2) ISPN000078: Starting JGroups channel ee
+[0m[0m18:05:12,469 INFO  [org.infinispan.remoting.transport.jgroups.JGroupsTransport] (MSC service thread 1-1) ISPN000078: Starting JGroups channel ee
+[0m[0m18:05:12,572 INFO  [org.infinispan.remoting.transport.jgroups.JGroupsTransport] (MSC service thread 1-2) ISPN000094: Received new cluster view for channel ee: [quiz-app-3-8wbxw|0] (1) [quiz-app-3-8wbxw]
+[0m[0m18:05:12,572 INFO  [org.infinispan.remoting.transport.jgroups.JGroupsTransport] (MSC service thread 1-1) ISPN000094: Received new cluster view for channel ee: [quiz-app-3-8wbxw|0] (1) [quiz-app-3-8wbxw]
+[0m[0m18:05:12,662 INFO  [org.infinispan.remoting.transport.jgroups.JGroupsTransport] (MSC service thread 1-1) ISPN000079: Channel ee local address is quiz-app-3-8wbxw, physical addresses are [10.128.5.72:7600]
+[0m[0m18:05:12,662 INFO  [org.infinispan.remoting.transport.jgroups.JGroupsTransport] (MSC service thread 1-2) ISPN000079: Channel ee local address is quiz-app-3-8wbxw, physical addresses are [10.128.5.72:7600]
+[0m[0m18:05:12,667 INFO  [org.infinispan.factories.GlobalComponentRegistry] (MSC service thread 1-2) ISPN000128: Infinispan version: Infinispan 'Chakra' 8.2.11.Final-redhat-1
+[0m[0m18:05:12,870 INFO  [org.infinispan.remoting.transport.jgroups.JGroupsTransport] (MSC service thread 1-2) ISPN000078: Starting JGroups channel ee
+[0m[0m18:05:12,870 INFO  [org.infinispan.remoting.transport.jgroups.JGroupsTransport] (MSC service thread 1-2) ISPN000094: Received new cluster view for channel ee: [quiz-app-3-8wbxw|0] (1) [quiz-app-3-8wbxw]
+[0m[0m18:05:12,870 INFO  [org.infinispan.remoting.transport.jgroups.JGroupsTransport] (MSC service thread 1-2) ISPN000079: Channel ee local address is quiz-app-3-8wbxw, physical addresses are [10.128.5.72:7600]
+[0m[0m18:05:12,872 INFO  [org.infinispan.remoting.transport.jgroups.JGroupsTransport] (MSC service thread 1-1) ISPN000078: Starting JGroups channel ee
+[0m[0m18:05:12,873 INFO  [org.infinispan.remoting.transport.jgroups.JGroupsTransport] (MSC service thread 1-1) ISPN000094: Received new cluster view for channel ee: [quiz-app-3-8wbxw|0] (1) [quiz-app-3-8wbxw]
+[0m[0m18:05:12,873 INFO  [org.infinispan.remoting.transport.jgroups.JGroupsTransport] (MSC service thread 1-1) ISPN000079: Channel ee local address is quiz-app-3-8wbxw, physical addresses are [10.128.5.72:7600]
+[0m[0m18:05:13,764 INFO  [org.jboss.as.clustering.infinispan] (ServerService Thread Pool -- 70) WFLYCLINF0002: Started client-mappings cache from ejb container
+[0m[31m18:05:14,171 ERROR [org.jboss.as.controller.management-operation] (Controller Boot Thread) WFLYCTL0013: Operation ("deploy") failed - address: ([("deployment" => "quiz.war")]) - failure description: {"WFLYCTL0080: Failed services" => {"jboss.deployment.unit.\"quiz.war\".PARSE" => "WFLYSRV0153: Failed to process phase PARSE of deployment \"quiz.war\"
+    Caused by: org.jboss.as.server.deployment.DeploymentUnitProcessingException: WFLYUT0027: Failed to parse XML descriptor \"/content/quiz.war/WEB-INF/web.xml\" at [27,9]
+    Caused by: javax.xml.stream.XMLStreamException: ParseError at [row,col]:[27,9]
+Message: Unexpected element 'res-ref-type' encountered"}}
+[0m[0m18:05:14,259 INFO  [org.jboss.as.server] (ServerService Thread Pool -- 39) WFLYSRV0010: Deployed "quiz.war" (runtime-name : "quiz.war")
+[0m[0m18:05:14,260 INFO  [org.jboss.as.server] (ServerService Thread Pool -- 39) WFLYSRV0010: Deployed "activemq-rar.rar" (runtime-name : "activemq-rar.rar")
+[0m[0m18:05:14,260 INFO  [org.jboss.as.controller] (Controller Boot Thread) WFLYCTL0183: Service status report
+WFLYCTL0186:   Services which failed to start:      service jboss.deployment.unit."quiz.war".PARSE: WFLYSRV0153: Failed to process phase PARSE of deployment "quiz.war"
+
+[0m[0m18:05:14,562 INFO  [org.jboss.as.server] (Controller Boot Thread) WFLYSRV0212: Resuming server
+[0m[0m18:05:14,564 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0060: Http management interface listening on http://127.0.0.1:9990/management
+[0m[0m18:05:14,564 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0054: Admin console is not enabled
+[0m[31m18:05:14,564 ERROR [org.jboss.as] (Controller Boot Thread) WFLYSRV0026: JBoss EAP 7.1.6.GA (WildFly Core 3.0.21.Final-redhat-00001) started (with errors) in 42398ms - Started 468 of 760 services (1 services failed or missing dependencies, 485 services are lazy, passive or on-demand)

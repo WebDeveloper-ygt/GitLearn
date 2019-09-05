@@ -31,3 +31,13 @@
 127.0.0.1 - - [05/Sep/2019:22:25:49 +0530] "GET /quiz/api/users/r HTTP/1.1" 500 1039 http-bio-9999-exec-3 4
 127.0.0.1 - - [05/Sep/2019:22:29:13 +0530] "GET /quiz/api/users/r HTTP/1.1" 500 1039 http-bio-9999-exec-4 8
 127.0.0.1 - - [05/Sep/2019:22:30:12 +0530] "POST /quiz/api/test/controller HTTP/1.1" 405 107 http-bio-9999-exec-5 4
+127.0.0.1 - - [05/Sep/2019:22:33:49 +0530] "GET /quiz/api/users/r HTTP/1.1" 404 122 http-bio-9999-exec-1 1041
+127.0.0.1 - - [05/Sep/2019:22:35:41 +0530] "PUT /quiz/api/users/9 HTTP/1.1" 400 124 http-bio-9999-exec-3 875
+127.0.0.1 - - [05/Sep/2019:22:36:03 +0530] "PUT /quiz/api/users/r HTTP/1.1" 404 122 http-bio-9999-exec-4 12
+127.0.0.1 - - [05/Sep/2019:23:22:40 +0530] "DELETE /quiz/api/users/r HTTP/1.1" 404 122 http-bio-9999-exec-1 1259
+127.0.0.1 - - [05/Sep/2019:23:23:17 +0530] "DELETE /quiz/api/users/25 HTTP/1.1" 404 176 http-bio-9999-exec-3 956
+127.0.0.1 - - [05/Sep/2019:23:24:03 +0530] "DELETE /quiz/api/users/11 HTTP/1.1" 200 162 http-bio-9999-exec-5 683
+127.0.0.1 - - [05/Sep/2019:23:24:55 +0530] "PUT /quiz/api/users/11 HTTP/1.1" 404 176 http-bio-9999-exec-7 233
+127.0.0.1 - - [05/Sep/2019:23:26:48 +0530] "GET /quiz/api/users/ HTTP/1.1" 200 1047 http-bio-9999-exec-9 314
+127.0.0.1 - - [05/Sep/2019:23:44:40 +0530] "GET /quiz/api/test HTTP/1.1" 200 10 http-bio-9999-exec-1 1336
+127.0.0.1 - - [05/Sep/2019:23:45:00 +0530] "GET /quiz/api/users/ HTTP/1.1" 200 1047 http-bio-9999-exec-3 1902
