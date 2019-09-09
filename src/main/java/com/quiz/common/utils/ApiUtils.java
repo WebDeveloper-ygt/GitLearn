@@ -29,7 +29,7 @@ public class ApiUtils {
     public static Connection getDbConnection() {
         try {
             Class.forName(DRIVER);
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            connection = DriverManager.getConnection(L_URL, USER, PASSWORD);
             LOG.info("Connection happened");
             return connection;
         } catch (Exception exe) {

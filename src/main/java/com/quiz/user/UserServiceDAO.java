@@ -10,14 +10,18 @@ import com.quiz.common.utils.Constants;
 import com.quiz.common.utils.Links;
 import org.apache.log4j.Logger;
 
+import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
 public class UserServiceDAO {
@@ -27,6 +31,7 @@ public class UserServiceDAO {
     private static String relMessage;
     private List<Links> exceptionLink;
     private static final Logger LOG = Logger.getLogger(UserServiceDAO.class);
+    Date expiryTime = Date.from(ZonedDateTime.now().plusMinutes(10).toInstant());
 
     public UserServiceDAO() {
         LOG.info("Invoked ==> " + this.getClass().getName());
@@ -74,7 +79,7 @@ public class UserServiceDAO {
             LOG.info("Number of User retrieved from the database is ==> " + userList.size());
             if (userList.size() > 0) {
                 return Response.status(Response.Status.OK).entity(new GenericEntity<List<UserBean>>(userList) {
-                }).build();
+                }).expires(expiryTime).allow(HttpMethod.GET).build();
             } else {
                 return HateoasUtils.ResourceNotFound(UserServiceDAO.class.getName(), uriInfo, id);
             }
