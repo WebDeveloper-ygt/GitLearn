@@ -49,3 +49,27 @@ WFLYCTL0186:   Services which failed to start:      service jboss.deployment.uni
 [0m[0m18:05:14,564 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0060: Http management interface listening on http://127.0.0.1:9990/management
 [0m[0m18:05:14,564 INFO  [org.jboss.as] (Controller Boot Thread) WFLYSRV0054: Admin console is not enabled
 [0m[31m18:05:14,564 ERROR [org.jboss.as] (Controller Boot Thread) WFLYSRV0026: JBoss EAP 7.1.6.GA (WildFly Core 3.0.21.Final-redhat-00001) started (with errors) in 42398ms - Started 468 of 760 services (1 services failed or missing dependencies, 485 services are lazy, passive or on-demand)
+
+
+
+Response response = userServiceImpl.getAllUsers(uriInfo.getAbsolutePath().toString());
+        Object entity = response.getEntity();
+        List<UserBean> responseList = (List<UserBean>) entity;
+         MessageDigest digest = MessageDigest.getInstance("MD5");
+        byte[] hash = digest.digest(String.valueOf(responseList.size()).getBytes(StandardCharsets.UTF_8));
+        String hex = DatatypeConverter.printHexBinary(hash);
+        EntityTag entityTag = new EntityTag(hex);
+        System.out.println(entityTag);
+        CacheControl cacheControl = new CacheControl();
+        cacheControl.setPrivate(true);
+        cacheControl.setMaxAge(1000);
+
+        System.out.println(cacheControl);
+       Response.ResponseBuilder responseBuilder = request.evaluatePreconditions(entityTag);
+        System.out.println(responseBuilder);
+        if(responseBuilder != null){
+            System.out.println(" ! = null " + responseBuilder);
+            return responseBuilder.cacheControl(cacheControl).build();
+        }
+        Response build = Response.ok().cacheControl(cacheControl).tag(entityTag).entity(new GenericEntity<List<UserBean>>(responseList){}).build();
+        return build;

@@ -11,10 +11,18 @@ Content-Type: application/json
 GET http://localhost:9999/quiz/api/users/r HTTP/1.1
 Content-Type: application/json
 
-GET http://localhost:9999/quiz/api/users/11 HTTP/1.1
+GET http://localhost:9999/quiz/api/users/9 HTTP/1.1
 Content-Type: application/json
 
+GET http://localhost:9999/quiz/api/users/test HTTP/1.1
+Content-Type: application/json
+If-None-Match: "981201011"
+
+
 GET http://localhost:9999/quiz/api/users/25 HTTP/1.1
+Content-Type: application/json
+
+OPTIONS http://localhost:9999/quiz/api/users/ HTTP/1.1
 Content-Type: application/json
 
 POST http://localhost:9999/quiz/api/users/ HTTP/1.1
@@ -165,3 +173,40 @@ Content-Type: application/json
 
 DELETE http://quiz-app-quizapi.apps.shared.na.openshift.opentlc.com/quiz/api/users/11 HTTP/1.1
 Content-Type: application/json
+
+GET http://learn-jersey.apps.na311.openshift.opentlc.com/jerseyweb-0.0.1-SNAPSHOT/api/custom/context
+Accept-Encoding: gzip
+
+GET http://learn-jersey.apps.na311.openshift.opentlc.com/jerseyweb-0.0.1-SNAPSHOT/api/custom/cache
+Content-Type: application/json
+============
+
+GET http://localhost:9999/quiz/api/users/1/exams
+
+GET http://localhost:9999/quiz/api/users/1/exams/30
+
+GET http://localhost:9999/quiz/api/test/context
+
+
+POST  http://localhost:9999/quiz/api/users/1/exams
+Content-Type: application/json
+
+{
+  "examDuration": 60,
+  "examName": "POST TEST",
+  "examStatus": "open",
+  "negativeMarks": 4,
+  "numberOfQuestions": 60
+}
+
+PUT  http://localhost:9999/quiz/api/users/1/exams/30
+Content-Type: application/json
+
+{
+  "examDuration": 60,
+  "examName": "PUTE TEST",
+  "examStatus": "open",
+  "negativeMarks": 4,
+  "numberOfQuestions": 60
+}
+

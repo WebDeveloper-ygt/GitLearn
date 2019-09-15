@@ -1,5 +1,7 @@
 package com.quiz.common.utils;
 
+import com.quiz.exam.model.ExamBean;
+import com.quiz.user.model.UserBean;
 import org.apache.log4j.Logger;
 import org.eclipse.persistence.exceptions.ConcurrencyException;
 
@@ -8,9 +10,15 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import javax.ws.rs.core.*;
+import javax.xml.bind.DatatypeConverter;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 
 public class ApiUtils {
 
@@ -43,7 +51,7 @@ public class ApiUtils {
         Connection connection = null;
         try {
             Context initContext = new InitialContext();
-           // Context envContext = (Context) initContext.lookup("java:comp/env");
+            // Context envContext = (Context) initContext.lookup("java:comp/env");
             DataSource dsContext = (DataSource) initContext.lookup("java:comp/env/jdbc/quizapiDS");
             connection = dsContext.getConnection();
             return connection;
@@ -51,5 +59,62 @@ public class ApiUtils {
             exe.printStackTrace();
         }
         return connection;
+    }
+
+    public static Response NotModiedChecker(Response response, Request request, String className) {
+        if (response.getStatus() == 200) {
+            if (className.equalsIgnoreCase("userBean")) {
+                List<UserBean> userBeanList = (List<UserBean>) response.getEntity();
+                try {
+                    MessageDigest digest = MessageDigest.getInstance("MD5");
+                    byte[] hash = digest.digest(String.valueOf(userBeanList.size()).getBytes(StandardCharsets.UTF_8));
+                    String hex = DatatypeConverter.printHexBinary(hash);
+                    EntityTag entityTag = new EntityTag(hex);
+                    System.out.println(request);
+                    System.out.println("entity tag : " + entityTag);
+                    CacheControl cacheControl = new CacheControl();
+                    cacheControl.setMaxAge(1000);
+                    Response.ResponseBuilder responseBuilder = request.evaluatePreconditions(entityTag);
+                    System.out.println("Response Builder after request evaluatePreconditions " +  responseBuilder);
+                    if (responseBuilder != null) {
+                        System.out.println("returned 304");
+                        return responseBuilder.cacheControl(cacheControl).build();
+                    }
+                    System.out.println("Returned 200");
+                    return Response.ok().cacheControl(cacheControl).tag(entityTag).entity(new GenericEntity<List<UserBean>>(userBeanList) {
+                    }).build();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+            }else if (className.equalsIgnoreCase("examBean")){
+                List<ExamBean> examBeanList = (List<ExamBean>) response.getEntity();
+                try {
+                    MessageDigest digest = MessageDigest.getInstance("MD5");
+                    byte[] hash = digest.digest(String.valueOf(examBeanList.size()).getBytes(StandardCharsets.UTF_8));
+                    String hex = DatatypeConverter.printHexBinary(hash);
+                    EntityTag entityTag = new EntityTag(hex);
+                    System.out.println(request);
+                    System.out.println("entity tag : " + entityTag);
+                    CacheControl cacheControl = new CacheControl();
+                    cacheControl.setMaxAge(1000);
+                    Response.ResponseBuilder responseBuilder = request.evaluatePreconditions(entityTag);
+                    System.out.println("Response Builder after request evaluatePreconditions " +  responseBuilder);
+                    if (responseBuilder != null) {
+                        System.out.println("returned 304");
+                        return responseBuilder.cacheControl(cacheControl).build();
+                    }
+                    System.out.println("Returned 200");
+                    return Response.ok().cacheControl(cacheControl).tag(entityTag).entity(new GenericEntity<List<ExamBean>>(examBeanList) {
+                    }).build();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+            }else{
+                return response;
+            }
+        }else{
+            return response;
+        }
+        return response;
     }
 }

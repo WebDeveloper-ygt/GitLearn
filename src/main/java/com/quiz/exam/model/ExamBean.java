@@ -3,11 +3,14 @@ package com.quiz.exam.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.quiz.common.utils.Links;
+import com.quiz.user.model.UserBean;
 
 @XmlRootElement(name = "exam")
+@Entity
 public class ExamBean {
     private int examId;
     private String examName ;
@@ -16,7 +19,7 @@ public class ExamBean {
     private int numberOfQuestions ;
     private List<AttendeesBean> attendeesList = new ArrayList<>();
     private String examStatus;
-    private List<Links> links = new ArrayList<>();
+    private UserBean user;
 
     public ExamBean() {
 
@@ -78,13 +81,25 @@ public class ExamBean {
         this.examStatus = examStatus;
     }
 
-    public List<Links> getLinks() {
-        return links;
+    public UserBean getUser() {
+        return user;
     }
 
-    public void setLinks(List<Links> links) {
-        this.links = links;
+    public void setUser(UserBean user) {
+        this.user = user;
     }
 
-
+    @Override
+    public String toString() {
+        return "ExamBean{" +
+                "examId=" + examId +
+                ", examName='" + examName + '\'' +
+                ", examDuration=" + examDuration +
+                ", negativeMarks=" + negativeMarks +
+                ", numberOfQuestions=" + numberOfQuestions +
+                ", attendeesList=" + attendeesList +
+                ", examStatus='" + examStatus + '\'' +
+                ", user=" + user +
+                '}';
+    }
 }

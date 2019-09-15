@@ -1,5 +1,6 @@
 package com.quiz.common.utils;
 
+import com.quiz.exam.model.ExamBean;
 import com.quiz.user.model.UserBean;
 
 import javax.ws.rs.core.Response;
@@ -41,5 +42,26 @@ public class BeanValidation {
                     + phoneNumber + "',`instituteName` = '" + instituteName + "' WHERE `userId` = " + userId + "";
         }
         return updateUser;
+    }
+
+    public static boolean ExamPostValidation(ExamBean examBean) {
+        return examBean.getExamDuration() != 0 && examBean.getExamDuration() >= 30 &&
+                examBean.getExamName() != null && !examBean.getExamName().equalsIgnoreCase("") &&
+                examBean.getExamStatus() != null && !examBean.getExamStatus().equalsIgnoreCase("") &&
+                examBean.getNegativeMarks() != 0 && examBean.getNegativeMarks() > 0 &&
+                examBean.getNumberOfQuestions() != 0 && examBean.getNumberOfQuestions() >= 30;
+    }
+
+    public static String examUpdateValidation(ExamBean updatedExamBean, ExamBean examBean) {
+        int examDuration = (examBean.getExamDuration() < 30) ? updatedExamBean.getExamDuration() : examBean.getExamDuration();
+        String examName = ((examBean.getExamName() == null || examBean.getExamName().equalsIgnoreCase(""))) ? updatedExamBean.getExamName() : examBean.getExamName();
+        String examStatus = ((examBean.getExamStatus() == null || examBean.getExamStatus().equalsIgnoreCase(""))) ? updatedExamBean.getExamStatus() : examBean.getExamStatus();
+        int negativeMarks = (examBean.getNegativeMarks() <= 0) ? updatedExamBean.getNegativeMarks() : examBean.getNegativeMarks();
+        int numberOfQuestions = (examBean.getNumberOfQuestions() < 30) ? updatedExamBean.getNumberOfQuestions() : examBean.getNumberOfQuestions();
+        int userId = updatedExamBean.getUser().getUserId();
+        int examId = updatedExamBean.getExamId();
+        String updatedExam = "UPDATE `quizapi`.`quiz_exams` SET `examName` = '" + examName + "',`examDuration` = '" + examDuration + "',`negativeMarks` = '" + negativeMarks + "'," +
+                "`numberOfQuestions` = '" + numberOfQuestions + "',`examStatus` ='" + examStatus + "' WHERE `examId` = '" + examId + "' AND `userId` ='" + userId + "'";
+        return updatedExam;
     }
 }

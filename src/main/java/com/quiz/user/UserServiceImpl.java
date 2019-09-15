@@ -5,6 +5,7 @@ import com.quiz.common.utils.BeanValidation;
 import com.quiz.user.model.UserBean;
 import org.apache.log4j.Logger;
 
+import javax.ws.rs.core.EntityTag;
 import javax.ws.rs.core.Response;
 
 public class UserServiceImpl implements UserServiceInterface{
@@ -18,7 +19,7 @@ public class UserServiceImpl implements UserServiceInterface{
 
     @Override
     public Response getAllUsers(String uriInfo) {
-      return userDao.getAllUsers(uriInfo);
+        return userDao.getAllUsers(uriInfo);
     }
 
     @Override

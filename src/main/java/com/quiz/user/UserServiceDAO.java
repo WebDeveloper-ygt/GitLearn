@@ -11,8 +11,7 @@ import com.quiz.common.utils.Links;
 import org.apache.log4j.Logger;
 
 import javax.ws.rs.HttpMethod;
-import javax.ws.rs.core.GenericEntity;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +24,6 @@ import java.util.Date;
 import java.util.List;
 
 public class UserServiceDAO {
-
 
     private List<UserBean> userList;
     private static String relMessage;
@@ -79,7 +77,7 @@ public class UserServiceDAO {
             LOG.info("Number of User retrieved from the database is ==> " + userList.size());
             if (userList.size() > 0) {
                 return Response.status(Response.Status.OK).entity(new GenericEntity<List<UserBean>>(userList) {
-                }).expires(expiryTime).allow(HttpMethod.GET).build();
+                }).allow(HttpMethod.GET,HttpMethod.POST).build();
             } else {
                 return HateoasUtils.ResourceNotFound(UserServiceDAO.class.getName(), uriInfo, id);
             }
@@ -209,4 +207,6 @@ public class UserServiceDAO {
             return HateoasUtils.ResourceNotFound(UserServiceDAO.class.getName(), uriInfo, userId);
         }
     }
+
+
 }

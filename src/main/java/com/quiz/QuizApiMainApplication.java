@@ -1,13 +1,9 @@
 package com.quiz;
 
-import com.quiz.common.utils.ApiUtils;
-
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 @ApplicationPath("/api")
 public class QuizApiMainApplication extends Application {
@@ -19,4 +15,17 @@ public class QuizApiMainApplication extends Application {
         return properties;
     }
 
+    /*@Override
+    public Set<Class<?>> getClasses() {
+       Set<Class<?>> classes = new HashSet<>();
+       classes.add(DeclarativeLinkingFeature.class);
+        return classes;
+    }
+*/
+   /* final Application application;
+
+    {
+        application = new ResourceConfig().packages("org.glassfish.jersey.examples.linking")
+                .register(DeclarativeLinkingFeature.class);
+    }*/
 }

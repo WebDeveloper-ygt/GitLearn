@@ -1,20 +1,16 @@
 package com.quiz.user;
 
-import com.quiz.common.annotations.TimeOut;
 import com.quiz.common.hateoas.HateoasUtils;
+import com.quiz.common.utils.ApiUtils;
 import com.quiz.common.utils.ThreadExecutor;
+import com.quiz.exam.ExamController;
 import com.quiz.user.model.UserBean;
 import org.apache.log4j.Logger;
-import org.eclipse.persistence.annotations.Cache;
 
-import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -31,6 +27,9 @@ public class UserController {
     @Context
     UriInfo uriInfo;
 
+    @Context
+    Request request;
+
     public UserController() {
         LOG.info("Invoked ==> " + this.getClass().getName());
     }
@@ -39,10 +38,12 @@ public class UserController {
     public void getAllUsers(@Suspended AsyncResponse asyncResponse) {
         String uriPath = uriInfo.getAbsolutePath().toString();
         LOG.info("Called URI ==> " + uriPath);
-
         asyncResponse.setTimeoutHandler((asyncResponse1 -> asyncResponse1.resume(HateoasUtils.timeoutException())));
         asyncResponse.setTimeout(10, TimeUnit.SECONDS);
-        CompletableFuture.supplyAsync(() -> userServiceImpl.getAllUsers(uriPath), executorService).thenAccept(asyncResponse::resume);
+        CompletableFuture.supplyAsync(() ->{
+            Response response=userServiceImpl.getAllUsers(uriPath);
+            return ApiUtils.NotModiedChecker(response,request,"userBean");
+        }, executorService).thenAccept(asyncResponse::resume);
     }
 
     @GET
@@ -52,7 +53,10 @@ public class UserController {
         LOG.info("Called URI ==> " + uriPath);
         asyncResponse.setTimeoutHandler((asyncResponse1 -> asyncResponse1.resume(HateoasUtils.timeoutException())));
         asyncResponse.setTimeout(10, TimeUnit.SECONDS);
-        CompletableFuture.supplyAsync(() -> userServiceImpl.getUser(uriPath,userId), executorService).thenAccept(asyncResponse::resume);
+        CompletableFuture.supplyAsync(() ->{
+            Response response = userServiceImpl.getUser(uriPath, userId);
+            return ApiUtils.NotModiedChecker(response,request,"userBean");
+        }, executorService).thenAccept(asyncResponse::resume);
     }
 
     @POST
@@ -61,18 +65,7 @@ public class UserController {
         LOG.info("Called URI ==> " + uriPath);
         asyncResponse.setTimeoutHandler((asyncResponse1 -> asyncResponse1.resume(HateoasUtils.timeoutException())));
         asyncResponse.setTimeout(10, TimeUnit.SECONDS);
-        CompletableFuture.supplyAsync(() -> userServiceImpl.addUser(uriPath,userBean), executorService).thenAccept(asyncResponse::resume);
-
-    }
-
-    @PUT
-    @Path("{userId : [0-9]*}")
-    public void updateUser(@Suspended AsyncResponse asyncResponse, UserBean userBean,@PathParam("userId") int userId){
-        String uriPath = uriInfo.getAbsolutePath().toString();
-        LOG.info("Called URI ==> " + uriPath);
-        asyncResponse.setTimeoutHandler((asyncResponse1 -> asyncResponse1.resume(HateoasUtils.timeoutException())));
-        asyncResponse.setTimeout(10, TimeUnit.SECONDS);
-        CompletableFuture.supplyAsync(() -> userServiceImpl.updateUSer(uriPath,userBean,userId), executorService).thenAccept(asyncResponse::resume);
+        CompletableFuture.supplyAsync(() ->  userServiceImpl.addUser(uriPath, userBean), executorService).thenAccept(asyncResponse::resume);
 
     }
 
@@ -83,7 +76,23 @@ public class UserController {
         LOG.info("Called URI ==> " + uriPath);
         asyncResponse.setTimeoutHandler((asyncResponse1 -> asyncResponse1.resume(HateoasUtils.timeoutException())));
         asyncResponse.setTimeout(10, TimeUnit.SECONDS);
-        CompletableFuture.supplyAsync(() -> userServiceImpl.deleteUser(uriPath,userId), executorService).thenAccept(asyncResponse::resume);
+        CompletableFuture.supplyAsync(() -> userServiceImpl.deleteUser(uriPath, userId), executorService).thenAccept(asyncResponse::resume);
 
+    }
+
+    @PUT
+    @Path("{userId : [0-9]*}")
+    public void updateUser(@Suspended AsyncResponse asyncResponse, UserBean userBean,@PathParam("userId") int userId){
+        String uriPath = uriInfo.getAbsolutePath().toString();
+        LOG.info("Called URI ==> " + uriPath);
+        asyncResponse.setTimeoutHandler((asyncResponse1 -> asyncResponse1.resume(HateoasUtils.timeoutException())));
+        asyncResponse.setTimeout(10, TimeUnit.SECONDS);
+        CompletableFuture.supplyAsync(() ->userServiceImpl.updateUSer(uriPath, userBean, userId), executorService).thenAccept(asyncResponse::resume);
+
+    }
+
+    @Path("/{userId : [0-9]*}/exams")
+    public ExamController getUserExams(){
+        return new ExamController();
     }
 }

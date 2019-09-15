@@ -14,7 +14,6 @@ public class ResponseFilterImpl implements ContainerResponseFilter {
         MultivaluedMap<String, Object> headers = responseContext.getHeaders();
 
         headers.add("X-Powered-By", "Jersey-Api");
-        headers.add("Cache-Control", "max-age=10");
 
     }
 }

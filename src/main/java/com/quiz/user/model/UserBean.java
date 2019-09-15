@@ -18,7 +18,6 @@ public class UserBean {
     private String phoneNumber;
     private String password;
     private String role;
-    private List<ExamBean> exams = new ArrayList<>();
     private String instituteName;
     private List<Links> links = new ArrayList<>();
 
@@ -74,14 +73,6 @@ public class UserBean {
         this.phoneNumber = phoneNumber;
     }
 
-    public List<ExamBean> getExams() {
-        return exams;
-    }
-
-    public void setExams(List<ExamBean> exams) {
-        this.exams = exams;
-    }
-
     public String getInstituteName() {
         return instituteName;
     }
@@ -129,7 +120,6 @@ public class UserBean {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", password='" + password + '\'' +
                 ", role='" + role + '\'' +
-                ", exams=" + exams +
                 ", instituteName='" + instituteName + '\'' +
                 ", links=" + links +
                 '}';
